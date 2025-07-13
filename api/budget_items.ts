@@ -11,7 +11,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     if (req.method === 'GET') {
-      const result = await client.query('SELECT * FROM holidays');
+      const result = await client.query('SELECT * FROM budget_items');
       return res.status(200).json(result.rows);
     }
 
@@ -19,7 +19,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const body = req.body;
       const keys = Object.keys(body);
       const values = Object.values(body);
-      const query = `INSERT INTO holidays (${keys.join(',')}) VALUES (${keys.map((_,i)=>'$'+(i+1)).join(',')}) RETURNING *`;
+      const query = `INSERT INTO budget_items (${keys.join(',')}) VALUES (${keys.map((_,i)=>'$'+(i+1)).join(',')}) RETURNING *`;
       const result = await client.query(query, values);
       return res.status(201).json(result.rows[0]);
     }
@@ -29,14 +29,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const keys = Object.keys(fields);
       const values = Object.values(fields);
       const setQuery = keys.map((k, i) => `${k} = ${i + 1}`).join(', ');
-      const query = `UPDATE holidays SET ${setQuery} WHERE id = ${keys.length + 1} RETURNING *`;
+      const query = `UPDATE budget_items SET ${setQuery} WHERE id = ${keys.length + 1} RETURNING *`;
       const result = await client.query(query, [...values, id]);
       return res.status(200).json(result.rows[0]);
     }
 
     if (req.method === 'DELETE') {
       const { id } = req.query;
-      const result = await client.query('DELETE FROM holidays WHERE id = $1 RETURNING *', [id]);
+      const result = await client.query('DELETE FROM budget_items WHERE id = $1 RETURNING *', [id]);
       return res.status(200).json(result.rows[0]);
     }
 
