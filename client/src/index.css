@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Force remove all arrow controls from number inputs and selects */
+input[type="number"] {
+  -webkit-appearance: textfield !important;
+  -moz-appearance: textfield !important;
+  appearance: textfield !important;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0 !important;
+}
+
+/* Remove default dropdown arrow from select elements */
+select {
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  -ms-appearance: none !important;
+  appearance: none !important;
+  background-image: none !important;
+}
+
+/* Force remove dropdown arrow in WebKit browsers */
+select::-webkit-dropdown-arrow {
+  display: none !important;
+  -webkit-appearance: none !important;
+}
+
+/* Remove dropdown arrow in Firefox */
+select::-moz-dropdown-arrow {
+  display: none !important;
+}
+
+/* Remove dropdown arrow in IE/Edge */
+select::-ms-expand {
+  display: none !important;
+}
